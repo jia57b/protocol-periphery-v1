@@ -236,7 +236,8 @@ contract RoyaltyIntegration is BaseIntegration {
             parentIpIds[0] = ancestorIpId;
             licenseTermsIds[0] = commRemixTermsIdA;
 
-            wrappedIP.deposit{ value: defaultMintingFeeA }();
+            // wrappedIP.deposit{ value: defaultMintingFeeA }();
+            _mintWIP(testSender, defaultMintingFeeA);
             wrappedIP.approve(derivativeWorkflowsAddr, defaultMintingFeeA);
             childIpIdA = derivativeWorkflows.registerIpAndMakeDerivative({
                 nftContract: address(spgNftContract),
@@ -280,7 +281,8 @@ contract RoyaltyIntegration is BaseIntegration {
             parentIpIds[0] = ancestorIpId;
             licenseTermsIds[0] = commRemixTermsIdA;
 
-            wrappedIP.deposit{ value: defaultMintingFeeA }();
+            // wrappedIP.deposit{ value: defaultMintingFeeA }();
+            _mintWIP(testSender, defaultMintingFeeA);
             wrappedIP.approve(derivativeWorkflowsAddr, defaultMintingFeeA);
             childIpIdB = derivativeWorkflows.registerIpAndMakeDerivative({
                 nftContract: address(spgNftContract),
@@ -324,7 +326,8 @@ contract RoyaltyIntegration is BaseIntegration {
             parentIpIds[0] = ancestorIpId;
             licenseTermsIds[0] = commRemixTermsIdC;
 
-            wrappedIP.deposit{ value: defaultMintingFeeC }();
+            // wrappedIP.deposit{ value: defaultMintingFeeC }();
+            _mintWIP(testSender, defaultMintingFeeC);
             wrappedIP.approve(derivativeWorkflowsAddr, defaultMintingFeeC);
             childIpIdC = derivativeWorkflows.registerIpAndMakeDerivative({
                 nftContract: address(spgNftContract),
@@ -371,7 +374,8 @@ contract RoyaltyIntegration is BaseIntegration {
                 licenseTermsIds[i] = commRemixTermsIdA;
             }
 
-            wrappedIP.deposit{ value: defaultMintingFeeA * parentIpIds.length }();
+            // wrappedIP.deposit{ value: defaultMintingFeeA * parentIpIds.length }();
+            _mintWIP(testSender, defaultMintingFeeA * parentIpIds.length);
             wrappedIP.approve(derivativeWorkflowsAddr, defaultMintingFeeA * parentIpIds.length);
             grandChildIpId = derivativeWorkflows.registerIpAndMakeDerivative({
                 nftContract: address(spgNftContract),
@@ -397,7 +401,8 @@ contract RoyaltyIntegration is BaseIntegration {
 
         // mints `amountLicenseTokensToMint` grandChildIp and childIpC license tokens
         {
-            wrappedIP.deposit{ value: (defaultMintingFeeA + defaultMintingFeeC) * amountLicenseTokensToMint }();
+            // wrappedIP.deposit{ value: (defaultMintingFeeA + defaultMintingFeeC) * amountLicenseTokensToMint }();
+            _mintWIP(testSender, (defaultMintingFeeA + defaultMintingFeeC) * amountLicenseTokensToMint);
             wrappedIP.approve(royaltyModuleAddr, (defaultMintingFeeA + defaultMintingFeeC) * amountLicenseTokensToMint);
 
             // mint `amountLicenseTokensToMint` grandChildIp's license tokens

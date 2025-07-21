@@ -50,7 +50,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
         private
         logTest("test_LicenseAttachmentIntegration_registerPILTermsAndAttach")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
 
         (address ipId, ) = registrationWorkflows.mintAndRegisterIp({
@@ -90,7 +91,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
     {
         // IP 1
         {
-            wrappedIP.deposit{ value: testMintFee }();
+            // wrappedIP.deposit{ value: testMintFee }();
+            _mintWIP(testSender, testMintFee);
             wrappedIP.approve(address(spgNftContract), testMintFee);
 
             (address ipId1, uint256 tokenId1, uint256[] memory licenseTermsIds1) = licenseAttachmentWorkflows
@@ -115,7 +117,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
 
         // IP 2
         {
-            wrappedIP.deposit{ value: testMintFee }();
+            // wrappedIP.deposit{ value: testMintFee }();
+            _mintWIP(testSender, testMintFee);
             wrappedIP.approve(address(spgNftContract), testMintFee);
 
             (address ipId2, uint256 tokenId2, uint256[] memory licenseTermsIds2) = licenseAttachmentWorkflows
@@ -143,7 +146,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
         private
         logTest("test_LicenseAttachmentIntegration_registerIpAndAttachPILTerms")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
 
         uint256 tokenId = spgNftContract.mint({
@@ -209,7 +213,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
         private
         logTest("test_LicenseAttachmentWorkflows_mintAndRegisterIpAndAttachDefaultTerms")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
 
         (address ipId1, uint256 tokenId1) = licenseAttachmentWorkflows.mintAndRegisterIpAndAttachDefaultTerms({
@@ -233,7 +238,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
         private
         logTest("test_LicenseAttachmentWorkflows_registerIpAndAttachDefaultTerms")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
 
         uint256 tokenId = spgNftContract.mint({
@@ -284,7 +290,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
 
     function _test_revert_TotalLicenseTokenLimitHook() private logTest("_test_revert_TotalLicenseTokenLimitHook") {
         // 1. register IP
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         (address ipId, ) = registrationWorkflows.mintAndRegisterIp({
             spgNftContract: address(spgNftContract),
@@ -332,7 +339,8 @@ contract LicenseAttachmentIntegration is BaseIntegration {
         emit DebugLogUint("Supply Before", supplyBefore);
 
         // 5. mint tokens
-        wrappedIP.deposit{ value: testMintFee * 3 }();
+        // wrappedIP.deposit{ value: testMintFee * 3 }();
+        _mintWIP(testSender, testMintFee * 3);
         wrappedIP.approve(royaltyModuleAddr, testMintFee * 3);
 
         licensingModule.mintLicenseTokens({

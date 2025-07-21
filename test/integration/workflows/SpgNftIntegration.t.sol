@@ -45,7 +45,8 @@ contract SpgNftIntegration is BaseIntegration {
      * @dev Test function to verify the setTokenURI functionality
      */
     function _test_SpgNftIntegration_setTokenURI() private logTest("test_SpgNftIntegration_setTokenURI") {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
 
         // Mint and register IP

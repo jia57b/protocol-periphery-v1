@@ -26,7 +26,7 @@ contract RegistrationIntegration is BaseIntegration {
         super.run();
         _beginBroadcast();
         _test_RegistrationIntegration_createCollection();
-        _test_RegistrationIntegration_createCollection();
+        // _test_RegistrationIntegration_createCollection();
         _test_RegistrationIntegration_mintAndRegisterIp();
         _test_RegistrationIntegration_registerIp();
         _test_RegistrationIntegration_multicall_createCollection();
@@ -74,7 +74,8 @@ contract RegistrationIntegration is BaseIntegration {
         private
         logTest("test_RegistrationIntegration_mintAndRegisterIp")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         (address ipId, uint256 tokenId) = registrationWorkflows.mintAndRegisterIp({
             spgNftContract: address(spgNftContract),

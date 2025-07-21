@@ -18,6 +18,7 @@ import { ILicensingModule } from "@storyprotocol/core/interfaces/modules/licensi
 import { IPILicenseTemplate } from "@storyprotocol/core/interfaces/modules/licensing/IPILicenseTemplate.sol";
 import { IRoyaltyModule } from "@storyprotocol/core/interfaces/modules/royalty/IRoyaltyModule.sol";
 import { MockIPGraph } from "@storyprotocol/test/mocks/MockIPGraph.sol";
+import { MockERC20 } from "../mocks/MockERC20.sol";
 
 // contracts
 import { DerivativeWorkflows } from "../../contracts/workflows/DerivativeWorkflows.sol";
@@ -65,7 +66,7 @@ contract BaseIntegration is
     TotalLicenseTokenLimitHook internal totalLicenseTokenLimitHook;
 
     /// @dev Wrapped IP token
-    WIP internal wrappedIP = WIP(payable(0x1514000000000000000000000000000000000000));
+    WIP internal wrappedIP = WIP(payable(0xa5D13B403C22E28eE1153CFc6aB5e5f740A65611));
 
     /// @dev Test data
     string internal testCollectionName;
@@ -87,6 +88,12 @@ contract BaseIntegration is
         // mock IPGraph precompile
         vm.etch(address(0x0101), address(new MockIPGraph()).code);
         _setUp();
+    }
+
+    /// @dev Helper function to mint WIP tokens using MockERC20
+    function _mintWIP(address to, uint256 amount) internal {
+        MockERC20 mockWIP = MockERC20(address(wrappedIP));
+        mockWIP.mint(to, amount);
     }
 
     function _setUp() internal {

@@ -8,6 +8,7 @@ import { IIPAccount } from "@storyprotocol/core/interfaces/IIPAccount.sol";
 import { ILicensingModule } from "@storyprotocol/core/interfaces/modules/licensing/ILicensingModule.sol";
 import { PILFlavors } from "@storyprotocol/core/lib/PILFlavors.sol";
 import { Licensing } from "@storyprotocol/core/lib/Licensing.sol";
+import { MockERC20 } from "../../mocks/MockERC20.sol";
 
 // contracts
 import { ISPGNFT } from "../../../contracts/interfaces/ISPGNFT.sol";
@@ -45,7 +46,8 @@ contract DerivativeIntegration is BaseIntegration {
         private
         logTest("test_DerivativeIntegration_mintAndRegisterIpAndMakeDerivative")
     {
-        wrappedIP.deposit{ value: testMintFee * 2 }(); // wrapping native IP
+        // wrappedIP.deposit{ value: testMintFee * 2 }(); // wrapping native IP
+        _mintWIP(testSender, testMintFee * 2);
         wrappedIP.approve(address(spgNftContract), testMintFee); // for nft minting fee
         wrappedIP.approve(derivativeWorkflowsAddr, testMintFee); // for derivative minting fee
         (address childIpId, uint256 childTokenId) = derivativeWorkflows.mintAndRegisterIpAndMakeDerivative({
@@ -393,7 +395,8 @@ contract DerivativeIntegration is BaseIntegration {
             })
         );
 
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         address parentIpId;
         (parentIpId, , parentLicenseTermIds) = licenseAttachmentWorkflows.mintAndRegisterIpAndAttachPILTerms({

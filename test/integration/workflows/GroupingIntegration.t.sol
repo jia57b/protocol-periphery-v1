@@ -16,7 +16,6 @@ import { PILFlavors } from "@storyprotocol/core/lib/PILFlavors.sol";
 import { ISPGNFT } from "../../../contracts/interfaces/ISPGNFT.sol";
 import { LicensingHelper } from "../../../contracts/lib/LicensingHelper.sol";
 import { IGroupingWorkflows } from "../../../contracts/interfaces/workflows/IGroupingWorkflows.sol";
-import { IRegistrationWorkflows } from "../../../contracts/interfaces/workflows/IRegistrationWorkflows.sol";
 import { WorkflowStructs } from "../../../contracts/lib/WorkflowStructs.sol";
 
 // test
@@ -68,7 +67,9 @@ contract GroupingIntegration is BaseIntegration {
             signerSk: testSenderSk
         });
 
-        wrappedIP.deposit{ value: testMintFee }();
+        // wrappedIP.deposit{ value: testMintFee }();
+        // use mockerc20 to mint
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         (address ipId, uint256 tokenId) = groupingWorkflows.mintAndRegisterIpAndAttachLicenseAndAddToGroup({
             spgNftContract: address(spgNftContract),
@@ -111,7 +112,7 @@ contract GroupingIntegration is BaseIntegration {
         private
         logTest("test_GroupingIntegration_registerIpAndAttachLicenseAndAddToGroup")
     {
-        wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         uint256 tokenId = spgNftContract.mint({
             to: testSender,
@@ -240,7 +241,7 @@ contract GroupingIntegration is BaseIntegration {
         uint256[] memory licenseTermsIds = new uint256[](1);
         licenseTermsIds[0] = testLicensesData[0].licenseTermsId;
 
-        wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         (address ipId1, ) = derivativeWorkflows.mintAndRegisterIpAndMakeDerivative({
             spgNftContract: address(spgNftContract),
@@ -258,7 +259,7 @@ contract GroupingIntegration is BaseIntegration {
             allowDuplicates: true
         });
 
-        wrappedIP.deposit{ value: testMintFee }();
+        _mintWIP(testSender, testMintFee);
         wrappedIP.approve(address(spgNftContract), testMintFee);
         (address ipId2, ) = derivativeWorkflows.mintAndRegisterIpAndMakeDerivative({
             spgNftContract: address(spgNftContract),
@@ -277,13 +278,13 @@ contract GroupingIntegration is BaseIntegration {
         });
 
         uint256 amount1 = 1 * 10 ** wrappedIP.decimals(); // 1 token
-        wrappedIP.deposit{ value: amount1 }();
+        _mintWIP(testSender, amount1);
         wrappedIP.approve(address(royaltyModule), amount1);
         royaltyModule.payRoyaltyOnBehalf(ipId1, testSender, address(wrappedIP), amount1);
         IGraphAwareRoyaltyPolicy(royaltyPolicyLRPAddr).transferToVault(ipId1, newGroupId, address(wrappedIP));
 
         uint256 amount2 = 2 * 10 ** wrappedIP.decimals(); // 2 tokens
-        wrappedIP.deposit{ value: amount2 }();
+        _mintWIP(testSender, amount2);
         wrappedIP.approve(address(royaltyModule), amount2);
         royaltyModule.payRoyaltyOnBehalf(ipId2, testSender, address(wrappedIP), amount2);
         IGraphAwareRoyaltyPolicy(royaltyPolicyLRPAddr).transferToVault(ipId2, newGroupId, address(wrappedIP));
@@ -361,7 +362,7 @@ contract GroupingIntegration is BaseIntegration {
             );
         }
 
-        wrappedIP.deposit{ value: testMintFee * numCalls }();
+        _mintWIP(testSender, testMintFee * numCalls);
         wrappedIP.approve(address(spgNftContract), testMintFee * numCalls);
 
         // batch call `mintAndRegisterIpAndAttachLicenseAndAddToGroup`
@@ -390,7 +391,7 @@ contract GroupingIntegration is BaseIntegration {
     {
         uint256 numCalls = 2;
 
-        wrappedIP.deposit{ value: testMintFee * numCalls }();
+        _mintWIP(testSender, testMintFee * numCalls);
         wrappedIP.approve(address(spgNftContract), testMintFee * numCalls);
         // mint a NFT from the spgNftContract
         uint256[] memory tokenIds = new uint256[](numCalls);
@@ -576,7 +577,7 @@ contract GroupingIntegration is BaseIntegration {
                 );
             }
 
-            wrappedIP.deposit{ value: testMintFee * numIps }();
+            _mintWIP(testSender, testMintFee * numIps);
             wrappedIP.approve(address(spgNftContract), testMintFee * numIps);
 
             // batch call `mintAndRegisterIp`

@@ -76,7 +76,8 @@ contract RoyaltyTokenDistributionIntegration is BaseIntegration {
         private
         logTest("test_RoyaltyTokenDistributionIntegration_mintAndRegisterIpAndMakeDerivativeAndDistributeRoyaltyTokens")
     {
-        wrappedIP.deposit{ value: licenseMintingFee }();
+        // wrappedIP.deposit{ value: licenseMintingFee }();
+        _mintWIP(testSender, licenseMintingFee);
         wrappedIP.approve(royaltyTokenDistributionWorkflowsAddr, licenseMintingFee);
 
         (address ipId, uint256 tokenId) = royaltyTokenDistributionWorkflows
@@ -345,7 +346,8 @@ contract RoyaltyTokenDistributionIntegration is BaseIntegration {
 
         address[] memory ipIdParent = new address[](1);
         uint256[] memory licenseTermsIds;
-        wrappedIP.deposit{ value: licenseMintingFee }();
+        // wrappedIP.deposit{ value: licenseMintingFee }();
+        _mintWIP(testSender, licenseMintingFee);
         wrappedIP.approve(address(spgNftContract), licenseMintingFee);
         (ipIdParent[0], , licenseTermsIds) = licenseAttachmentWorkflows.mintAndRegisterIpAndAttachPILTerms({
             spgNftContract: address(spgNftContract),
