@@ -65,7 +65,7 @@ contract BaseIntegration is
     TotalLicenseTokenLimitHook internal totalLicenseTokenLimitHook;
 
     /// @dev Wrapped IP token
-    WIP internal wrappedIP = WIP(payable(0x1514000000000000000000000000000000000000));
+    WIP internal wrappedIP = WIP(payable(0xa5D13B403C22E28eE1153CFc6aB5e5f740A65611));
 
     /// @dev Test data
     string internal testCollectionName;
