@@ -133,9 +133,9 @@ jobs:
           }'
 
           devnet_version="${{ inputs.devnet_version || github.event.inputs.devnet_version || 'internal-devnet' }}"
-          if [[ "$devnet_version" == "internal-devnet" ]]; then
-            echo $PERIPHERY_ADDRESS > ./deploy-out/deployment-${{ needs.set-devnet-constants.outputs.CHAINID }}.json
-          fi
+          # if [[ "$devnet_version" == "aeneid" ]]; then
+          echo $PERIPHERY_ADDRESS > ./deploy-out/deployment-${{ needs.set-devnet-constants.outputs.CHAINID }}.json
+          # fi
 
       - name: Build Contracts
         run: |
